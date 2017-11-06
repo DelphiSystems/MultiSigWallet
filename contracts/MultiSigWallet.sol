@@ -16,6 +16,7 @@ contract MultiSigWallet {
     event Deposit(address indexed sender, uint value);
     event OwnerAddition(address indexed owner);
     event OwnerRemoval(address indexed owner);
+    event Whitelisted(address indexed participant);
     event RequirementChange(uint required);
 
     /*
@@ -29,6 +30,7 @@ contract MultiSigWallet {
     mapping (uint => Transaction) public transactions;
     mapping (uint => mapping (address => bool)) public confirmations;
     mapping (address => bool) public isOwner;
+    mapping (address => bool) public isWhitelisted;
     address[] public owners;
     uint public required;
     uint public transactionCount;
@@ -104,6 +106,8 @@ contract MultiSigWallet {
     function()
         payable
     {
+        // Sender must be whitelisted
+        require(isWhitelisted[msg.sender]);
         if (msg.value > 0)
             Deposit(msg.sender, msg.value);
     }
@@ -125,6 +129,17 @@ contract MultiSigWallet {
         }
         owners = _owners;
         required = _required;
+    }
+
+    /// @dev Add an address to the whitelist. Transaction must be sent by wallet.
+    /// @param owner Address of new owner.
+    function whitelist(address participant)
+        public
+        onlyWallet
+        notNull(participant)
+    {
+        isWhitelisted[participant] = true;
+        Whitelisted(participant);
     }
 
     /// @dev Allows to add a new owner. Transaction has to be sent by wallet.
