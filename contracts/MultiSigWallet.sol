@@ -132,7 +132,7 @@ contract MultiSigWallet {
     }
 
     /// @dev Add an address to the whitelist. Transaction must be sent by wallet.
-    /// @param owner Address of new owner.
+    /// @param participant Address of new participant.
     function whitelist(address participant)
         public
         onlyWallet
