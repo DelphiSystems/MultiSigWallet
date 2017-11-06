@@ -1,4 +1,4 @@
-Ethereum Multisignature Wallet
+Ethereum Multisignature Wallet (with sender whitelist)
 ===================
 
 [![Join the chat at https://gitter.im/gnosis/MultiSigWallet](https://badges.gitter.im/gnosis/MultiSigWallet.svg)](https://gitter.im/gnosis/MultiSigWallet?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
